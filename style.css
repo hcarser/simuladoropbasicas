@@ -1,0 +1,20 @@
+        /* Usamos la fuente Inter como base */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Pequeño ajuste para el input numérico sin flechas */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        /* Estilo para botones deshabilitados */
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+    

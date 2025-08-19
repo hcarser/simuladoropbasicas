@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Operaciones Básicas</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex items-center justify-center p-4">
+
+    <main class="w-full max-w-4xl mx-auto space-y-8">
+        
+        <!-- Encabezado -->
+        <header class="text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">
+                Simulador de Operaciones Básicas
+            </h1>
+            <p class="mt-2 text-lg text-gray-600">¡Practica tus habilidades matemáticas con operaciones básicas!</p>
+        </header>
+
+        <!-- Contenedor principal con dos columnas: Configuración y Problema -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Columna Izquierda: Configuración -->
+            <div class="lg:col-span-1 space-y-8">
+                <section class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Configuración</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="operacion" class="text-sm font-medium text-gray-600">Operación</label>
+                            <select id="operacion" class="mt-1 block w-full bg-gray-100 border-transparent rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="suma">Suma (+)</option>
+                                <option value="resta">Resta (-)</option>
+                                <option value="multiplicacion">Multiplicación (×)</option>
+                                <option value="division">División (÷)</option>
+                                <option value="combinada">Operaciones Combinadas</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="dificultad" class="text-sm font-medium text-gray-600">Dificultad</label>
+                            <select id="dificultad" class="mt-1 block w-full bg-gray-100 border-transparent rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="facil">Nivel Fácil</option>
+                                <option value="medio">Nivel Medio</option>
+                                <option value="dificil">Nivel Difícil</option>
+                                <option value="extremo">Nivel Extremo (Aplicación)</option>
+                            </select>
+                        </div>
+                        <button id="comenzar" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
+                            Comenzar Desafío
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Columna Derecha: Problema (ocupa más espacio) -->
+            <div class="lg:col-span-2">
+                <section id="problema" class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 text-center min-h-[300px] flex flex-col justify-center items-center transition-opacity duration-500" style="display: none;">
+                    
+                    <!-- Estado inicial -->
+                    <div id="estado-inicial" class="text-center">
+                         <svg class="mx-auto h-16 w-16 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                        </svg>
+                        <h3 class="mt-2 text-lg font-medium text-gray-900">¡Listo para empezar!</h3>
+                        <p class="mt-1 text-gray-500">Configura tu desafío y presiona "Comenzar".</p>
+                    </div>
+
+                    <!-- Contenedor del problema activo -->
+                    <div id="problema-activo" class="w-full hidden">
+                        <h2 class="text-lg font-semibold text-gray-500 mb-4">Resuelve el problema</h2>
+                        <div id="operacion-actual" class="text-5xl md:text-6xl font-bold text-gray-800 my-6">? + ? =</div>
+                        <input type="number" id="respuesta" placeholder="Tu respuesta" class="w-48 mx-auto text-center text-3xl font-semibold bg-gray-100 border-2 border-gray-200 rounded-lg py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        
+                        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button id="verificar" class="w-full bg-green-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-transform transform hover:scale-105">Verificar</button>
+                            <button id="siguiente" class="w-full bg-amber-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-transform transform hover:scale-105">Siguiente</button>
+                        </div>
+                        
+                        <div id="resultado" class="mt-6 text-lg font-medium p-3 rounded-lg" style="display: none;"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Sección de Estadísticas (ahora abajo y a lo ancho) -->
+        <section class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Estadísticas</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                <div class="bg-blue-50 p-3 rounded-lg">
+                    <p class="text-sm text-blue-800">Resueltos</p>
+                    <div id="total-problemas" class="text-2xl font-bold text-blue-900">0</div>
+                </div>
+                <div class="bg-green-50 p-3 rounded-lg">
+                    <p class="text-sm text-green-800">Correctos</p>
+                    <div id="total-correctos" class="text-2xl font-bold text-green-900">0</div>
+                </div>
+                <div class="bg-red-50 p-3 rounded-lg">
+                    <p class="text-sm text-red-800">Incorrectos</p>
+                    <div id="total-incorrectos" class="text-2xl font-bold text-red-900">0</div>
+                </div>
+                <div class="bg-purple-50 p-3 rounded-lg">
+                    <p class="text-sm text-purple-800">Precisión</p>
+                    <div id="precision" class="text-2xl font-bold text-purple-900">0%</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="ja.js"></script>
+</body>
+</html>
